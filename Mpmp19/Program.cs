@@ -10,41 +10,36 @@ namespace Mpmp19
         public static void Main(string[] args)
         {
             var primeNFactors = new List<int>();
-            
-            
-            
-            for (int i = 2; i < 1000; i++)
+
+            var maxN = 1000;
+            var primeList = GeneratePrimes(maxN);
+
+            for (var i = 2; i < 10000; i++)
             {
-             var isFactor = IsSquarePrimeSumFactor(i);
-             if (isFactor)
-             {
-                 primeNFactors.Add(i);
-             }
+                var isFactor = IsSquarePrimeSumFactor(primeList, i);
+                if (isFactor)
+                {
+                    primeNFactors.Add(i);
+                }
             }
 
-            foreach (var n in primeNFactors)
-            {
-                Console.WriteLine(n);
-            }
-            
+            foreach (var n in primeNFactors) Console.WriteLine(n);
         }
 
-        private static bool IsSquarePrimeSumFactor(int n)
+        private static bool IsSquarePrimeSumFactor(ArrayList primeList, int n)
         {
-            var primeList = GeneratePrimes(n);
-
             double psSum = 0;
-            foreach (var p in primeList)
+            for (var i = 0; i < n; i++)
             {
+                var p = primeList[i];
                 var ps = Math.Pow(Convert.ToDouble(p), 2);
                 psSum += ps;
             }
-            
 
             var psSumDiv = psSum / n;
             var remainder = psSum % n;
-            bool isFactor = remainder == 0;
-            
+            var isFactor = remainder == 0;
+
             return isFactor;
         }
 
@@ -52,34 +47,33 @@ namespace Mpmp19
         {
             var sw = new Stopwatch();
             sw.Start();
-            ArrayList primes = new ArrayList();
+            var primes = new ArrayList();
             primes.Add(2);
             primes.Add(3);
             while (primes.Count < toGenerate)
             {
-                int nextPrime = (int)(primes[primes.Count - 1]) + 2;
+                var nextPrime = (int) primes[primes.Count - 1] + 2;
                 while (true)
                 {
-                    bool isPrime = true;
+                    var isPrime = true;
                     foreach (int n in primes)
-                    {
                         if (nextPrime % n == 0)
                         {
                             isPrime = false;
                             break;
                         }
-                    }
+
                     if (isPrime)
                     {
                         break;
                     }
-                    else
-                    {
-                        nextPrime += 2;
-                    }
+
+                    nextPrime += 2;
                 }
+
                 primes.Add(nextPrime);
             }
+
             sw.Stop();
             Console.WriteLine("Generate primes " + sw.ElapsedMilliseconds + " ms");
             return primes;
