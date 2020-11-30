@@ -1,0 +1,1 @@
+ffmpeg -framerate 60 -i "img%%04d.png" output.mp4
