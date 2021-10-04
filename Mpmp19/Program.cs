@@ -65,7 +65,7 @@ namespace Mpmp19
             {
                 var outputs = new List<OutputData>();
 
-                var maxPower = 40;
+                var maxPower = 69;
                 var maxN = 100000000;
                 //var primeList = GeneratePrimes(maxN);
 
@@ -77,14 +77,23 @@ namespace Mpmp19
 
                 for (var power = 1; power <= maxPower; power++)
                 {
-                    var primeNFactors = FindPrimeNFactorsBigInt(maxN, primePowSumBigInt, primeList, power);
 
-                    var outputData = new OutputData();
-                    outputData.Power = power;
-                    outputData.PrimeNFactors = primeNFactors;
-                    outputs.Add(outputData);
-                    Console.WriteLine($"Power {power} found {primeNFactors.Count} prime n factors");
+                    try
+                    {
+                        var primeNFactors = FindPrimeNFactorsBigInt(maxN, primePowSumBigInt, primeList, power);
+
+                        var outputData = new OutputData {Power = power, PrimeNFactors = primeNFactors};
+                        outputs.Add(outputData);
+                        Console.WriteLine($"Power {power} found {primeNFactors.Count} prime n factors");
+                    }
+                    catch (Exception e)
+                    {
+                        maxPower = power;
+                        Console.WriteLine(e);
+                    }
+
                 }
+                Console.WriteLine("Done with calcs");
 
                 var maxout = 25;
                 var pstr = "";
@@ -178,7 +187,9 @@ namespace Mpmp19
 
                     var remainder = primePowSum % n;
                     var isFactor = remainder == 0;
-
+Console.WriteLine(n);
+Console.WriteLine(n);
+n = maxN;
                     if (isFactor)
                     {
                         primeNFactors.Add(n);

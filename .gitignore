@@ -450,3 +450,5 @@ fabric.properties
 .gitignore
 .idea/
 Mpmp19.sln
+Mpmp19/frames/
+Mpmp19/lineframes/
